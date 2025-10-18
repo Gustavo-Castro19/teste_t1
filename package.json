@@ -1,0 +1,20 @@
+{
+  "name": "teste_t1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jest": "^30.2.0",
+    "mysql2": "^3.15.2"
+  }
+}

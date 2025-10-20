@@ -43,7 +43,7 @@ describe('Casos CT-001 a CT-006 - API /stock', () => {
     expect(body.quantity).toBe(payload.quantity);
   });
 
-  test('CT-001 - Listar estoque (positivo): GET /stock retorna array com pelo menos um item após criação', async () => 
+  test('CT-001 - Listar estoque (positivo): GET /stock retorna array com pelo menos um item após criação', async () =>{ 
     const payload = { name: 'Lapis Teste', value: 1.2, quantity: 5 };
     const createRes = await createProduct(payload);
     expect([200, 201]).toContain(createRes.status);

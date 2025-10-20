@@ -1,4 +1,3 @@
-
 //JEST SAMPLE FUNCTION TEST
 
 test('two plus two is four', () => {
@@ -22,5 +21,3 @@ expect(double(4)).toBe(8);
 expect(() => double('a')).toThrow(Error);
 });
 // END 
-
-

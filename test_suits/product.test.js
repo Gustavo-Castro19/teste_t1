@@ -1,6 +1,5 @@
-import Product from "./product.js";
+import Product from "../samples/product/product.js";
 
-  //TESTING WITH IMPORT 
 
 const product = new Product(11,"produto",10);
 

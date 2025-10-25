@@ -1,22 +1,18 @@
 const express = require('express');
-const prod = require('entities/product');
+const stockRoutes = require('./routes/stockRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
-let port=3000;
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const clearStock = (stock) => {
-  delete stock; 
-}
-
-
-app.listen(port, ()=>{
-  console.log(`listen on http://localhost:${port}`);
+app.get('/', (req, res) => {
+  res.json({ message: 'Stock API - v0.1.0' });
 });
 
-app.get('/',(req,res)=>{
-  res.send("hello world");
-});
+app.use('/stock', stockRoutes);
 
+app.use(errorHandler);
 
-
+module.exports = app;

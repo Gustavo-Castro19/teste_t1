@@ -1,4 +1,4 @@
-class stock{
+module.exports= class Stock{
   #id; 
   #name;
   #price;
@@ -29,20 +29,18 @@ class stock{
 
 };
 
-class fruits extends stock{
+/*class fruits extends stock{
   #weight=1.0;
   
   
- /* set price(){
+  set price(){
     return priceWeight(this.price,this.weight,this.quantity);
-  }*/
+  }
 
   priceWeight(price,weight,quantity){
     if(weight <0.01) return 0; 
     return (price/weight)*quantity;
   }
 
-};
+};*/
 
-
-export default stock;

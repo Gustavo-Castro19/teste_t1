@@ -1,25 +1,25 @@
 {
-  "name": "teste_at",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js ",
+  "name": "teste_t1",
+  "version": "0.1.0",
+  "description": "Inventory API - initial skeleton",
+  "main": "src/server.js",
   "scripts": {
-    "test": "jest",
-    "run": "node src/app.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --runInBand"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Gustavo-Castro19/teste_t1.git"
-  },
-  "author": "",
-  "license": "MIT ",
-  "bugs": {
-    "url": "https://github.com/Gustavo-Castro19/teste_t1/issues"
-  },
-  "homepage": "https://github.com/Gustavo-Castro19/teste_t1#readme",
+  "keywords": [],
+  "author": "Gustavo-Castro19",
+  "license": "MIT",
   "dependencies": {
-    "express": "^5.1.0",
-    "jest": "^30.2.0",
-    "mysql2": "^3.15.2"
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3",
+    "joi": "^17.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.6.1",
+    "supertest": "^6.4.4",
+    "eslint": "^8.47.0"
   }
 }

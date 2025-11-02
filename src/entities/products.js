@@ -1,3 +1,7 @@
+// NOT IN USE ON MAIN AT THIS MOMENT --- IGNORE THIS ARCHIVE FOR NOW 
+// THIS IS JUST AN EXPERIMENT FOR ALTERNATIVE BRANCHS
+
+
 module.exports= class Stock{
   #id; 
   #name;
@@ -28,19 +32,4 @@ module.exports= class Stock{
   }
 
 };
-
-/*class fruits extends stock{
-  #weight=1.0;
-  
-  
-  set price(){
-    return priceWeight(this.price,this.weight,this.quantity);
-  }
-
-  priceWeight(price,weight,quantity){
-    if(weight <0.01) return 0; 
-    return (price/weight)*quantity;
-  }
-
-};*/
 

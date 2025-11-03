@@ -7,20 +7,20 @@ const TAG = Object.freeze({
   ELECTRONICS: "electronics",
   FRUITS: "fruits",
   FURNITURE: "furniture",
-  UNTAGGED: ""
+  UNTAGGED: "no_category"
 });
 
 class SpecialAttributes {
   constructor(data = {}) {
-    this.brand = data.brand || null;
-    this.manufacturer = data.manufacturer || null;
-    this.model = data.model || null;
-    this.releaseDate = data.releaseDate || null;
+    this.brand = data.brand ?? "";
+    this.manufacturer = data.manufacturer ?? "";
+    this.model = data.model ?? "";
+    this.releaseDate = data.releaseDate ?? "";
     
-    this.dimensions = data.dimensions || null;
-    this.material = data.material || null;
+    this.dimensions = data.dimensions ?? "";
+    this.material = data.material ?? "";
     
-    this.weight = data.weight || null;
+    this.weight = data.weight ?? "";
   }
 }
 
@@ -73,7 +73,7 @@ function create(payload) {
     value: payload.value,
     quantity: payload.quantity,
     tag: payload.tag || TAG.UNTAGGED,
-    special: payload.special ? new SpecialAttributes(payload.special) : null,
+      special: payload.special ? new SpecialAttributes(payload.special) : {},
     meta: payload.meta || {},
   };
   
@@ -81,7 +81,7 @@ function create(payload) {
   return item;
 }
 
-function list() {
+function list(count) {
   return items.slice();
 }
 

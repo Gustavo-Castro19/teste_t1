@@ -11,20 +11,28 @@ const TAG = Object.freeze({
 });
 
 class SpecialAttributes {
-  constructor(data = {}) {
-    this.brand = data.brand ?? "";
-    this.manufacturer = data.manufacturer ?? "";
-    this.model = data.model ?? "";
-    this.releaseDate = data.releaseDate ?? "";
-    
-    this.dimensions = data.dimensions ?? "";
-    this.material = data.material ?? "";
-    
-    this.weight = data.weight ?? "";
+  constructor(data = {}, tag) {
+      switch(tag){
+        case "electronics":
+          this.brand = data.brand ?? "unknow";
+          this.manufacturer = data.manufacturer ?? "unknow";
+          this.model = data.model ?? "unknow";
+          this.releaseDate = data.releaseDate ?? "unknow";
+          break; 
+        case "furniture":
+          this.dimensions = data.dimensions ?? "";
+          this.material = data.material ?? "";
+          break; 
+        case "fruits":
+          this.weight = data.weight ?? "";
+          break;
+        default: 
+          break; 
+      }
   }
 }
 
-function validateBasic(payload) {
+const validateBasic= (payload) => {
   if (!payload || typeof payload !== 'object') {
     const err = new Error('Invalid payload');
     err.status = INVALID_REQUEST;
@@ -64,7 +72,7 @@ function validateBasic(payload) {
   }
 }
 
-function create(payload) {
+const create = (payload) => {
   validateBasic(payload);
   
   const item = {
@@ -73,7 +81,7 @@ function create(payload) {
     value: payload.value,
     quantity: payload.quantity,
     tag: payload.tag || TAG.UNTAGGED,
-      special: payload.special ? new SpecialAttributes(payload.special) : {},
+    special: payload.special ? new SpecialAttributes(payload.special,payload.tag) : {},
     meta: payload.meta || {},
   };
   
@@ -81,11 +89,11 @@ function create(payload) {
   return item;
 }
 
-function list(count) {
+function list() {
   return items.slice();
 }
 
-function getById(id) {
+const getById = (id) => {
   const found = items.find((i) => i.id === String(id));
   if (!found) {
     const err = new Error('Product not found');
@@ -95,7 +103,7 @@ function getById(id) {
   return found;
 }
 
-function update(id, payload) {
+const update = (id, payload) => {
   const idx = items.findIndex((i) => i.id === String(id));
   if (idx === -1) {
     const err = new Error('Product not found');
@@ -114,7 +122,7 @@ function update(id, payload) {
   return updated;
 }
 
-function remove(id) {
+const remove= (id) => {
   const idx = items.findIndex((i) => i.id === String(id));
   if (idx === -1) {
     const err = new Error('Product not found');
@@ -124,7 +132,7 @@ function remove(id) {
   items.splice(idx, 1);
 }
 
-function reset() {
+const reset = () => {
   items = [];
   nextId = 0;
 }

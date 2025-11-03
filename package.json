@@ -18,6 +18,9 @@
     "supertest": "^7.1.4"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "globals": "^16.5.0",
     "jest": "^30.2.0",
     "nodemon": "^3.1.10"
   }

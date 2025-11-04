@@ -1,35 +1,29 @@
 const {db} = require('../middleware/dbConnect.js');
 
 async function viewAllProduct(){
-    const sql = 'SELECT p.idPro, p.nomePro, p.valuePro, p.quantityPro, p.tagPro, p.atributesPro, p.metaPro FROM product AS p';
+    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.tag, p.atributes, p.meta FROM product AS p';
     try{
         const [rows] = await db.execute(sql);
-        return {rows};
+        return rows;
     }catch(err){
-        console.log(`Falha ao consultar todo o stock ${err}`);
+        throw new Error(`Falha ao consultar estoque: ${err}`);
     }
 }
-
 
 async function viewProduct(req){
-    const sql = 'SELECT p.idPro, p.nomePro, p.valuePro, p.quantityPro, p.tagPro, p.atributesPro, p.metaPro FROM product AS p WHERE p.idPro = ?'
+    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.tag, p.atributes, p.meta FROM product AS p WHERE p.id = ?'
     try{
-        const [rows] = await db.execute(sql, req);
-        return {rows};
+        const [rows] = await db.execute(sql, [req.id]);
+        return rows;
     }catch(err){
-        console.log(`Falha ao consultar produto ${err}`);
+        throw new Error(`Falha ao consultar produto: ${err}`);
     }
 }
-async function print(){
-    const result = await viewProduct([3]);
-    console.log(JSON.stringify(result, null, 2));
-}
-print();
 
 async function newProduct(req){
-    const sql = 'INSERT INTO product(nomePro, valuePro, quantityPro, tagPro, atributesPro, metaPro) VALUES (?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO product(nome, value, quantity, tag, atributes, meta) VALUES (?, ?, ?, ?, ?, ?)';
     try{
-        await db.execute(sql, [
+        const [result] = await db.execute(sql, [
             req.nome,
             req.value,
             req.quantity,
@@ -37,17 +31,48 @@ async function newProduct(req){
             req.atributes,
             JSON.stringify(req.meta)
         ]);
+        return result;
     }catch(err){
-        console.log(`Error ao criar produto: ${err}`);
+        throw new Error(`Error ao criar produto: ${err}`);
     }
 }
 
-function updateProduct(req){
+async function updateProduct(req){
+    let atribute = "";
+    let value = [];
 
+    try{
+        if(req.id == undefined){
+            throw new Error("Require field 'id'.");
+        }
+        for(let field in req){
+            if(field !== "id"){
+                if(req[field] !== undefined){
+                    if(atribute !== "") atribute += ", ";
+                    atribute += `${field} = ?`;
+                    value.push(req[field]);
+                }
+            }
+        }
+    
+        const sql = `UPDATE product SET ${atribute} WHERE id = ?`;
+
+        const [result] = await db.execute(sql, [...value, req.id]);
+        return result;
+    }catch(err){
+        throw new Error(`Erro ao atualizar produto: ${err}`);
+    }
 }
 
-function deleteProduct(req){
-
+async function deleteProduct(req){
+    const sql = "DELETE FROM product WHERE id = ?"
+    try{
+        const [result] = await db.execute(sql, [req.id]);
+        console.log("Produto deletado com sucesso");
+        return result;
+    }catch(err){
+        throw new Error(`Erro ao deletar produto: ${err}`);
+    }
 }
 
 module.exports = {

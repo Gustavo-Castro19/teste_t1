@@ -1,0 +1,191 @@
+.header {
+    background-color: var(--background);
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    position: fixed;
+    width: 100%;
+    padding: 0 10px;
+    z-index: 3;
+}
+.header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+}  
+.header li a {
+    display: block;
+    padding: 20px 20px;
+    border-right: 1px solid #f4f4f4;
+    text-decoration: none;
+}
+.header .logo {
+    display: block;
+    float: left;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: var(--background);
+    color: #fff;
+}
+.header .menuIcon {
+    cursor: pointer;
+    display: inline-block;
+    padding: 24px 20px;
+    position: relative;
+    user-select: none;
+    background-color: var(--background);
+}
+.header .menuIcon .navicon {
+    background: #fff;
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 18px;
+}  
+.header .menuIcon .navicon:before,
+.header .menuIcon .navicon:after {
+    background: #fff;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+.header .menuIcon .navicon:before {
+    top: 5px;
+}
+.header .menuIcon .navicon:after {
+    top: -5px;
+}
+.header .menu {
+    clear: both;
+    max-height: 0;
+}
+.header .menu li a {
+    color: #fff;
+    background-color: var(--background);
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+}
+.header .menu li a:is(:hover, :focus) {
+    color: var(--complement);
+    scale: 1.2;
+    transition: all 0.3s ease-in-out;
+}
+.header .menuBtn {
+    display: none;
+}
+.header .menuBtn:checked ~ .menu {
+    max-height: 260px;
+}
+.header .menuBtn:checked ~ .menuIcon .navicon {
+    background: transparent;
+}
+.header .menuBtn:checked ~ .menuIcon .navicon:before {
+    transform: rotate(-45deg);
+}
+.header .menuBtn:checked ~ .menuIcon .navicon:after {
+    transform: rotate(45deg);
+}
+.header .menuBtn:checked ~ .menuIcon:not(.steps) .navicon:before,
+.header .menuBtn:checked ~ .menuIcon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+@media (min-width: 23em) {
+    .header .logo {
+        font-size: 2rem;
+    }
+    .header .menuIcon {
+        padding: 28px 20px;
+    }
+}
+
+@media (min-width: 40em) {
+    .header {
+        padding: 0 40px;
+    }
+}
+
+@media (min-width: 48em) {
+    .header {
+        padding: 0 45px;
+    }
+    .header .logo {
+        font-size: 2.4rem;
+    }
+    .header .menuIcon {
+        padding: 34px 20px;
+    }
+    .header .menuIcon .navicon {
+        height: 3px;
+        width: 20px;
+    }
+    .header .menuIcon .navicon:before {
+        top: 6px;
+    }
+    .header .menuIcon .navicon:after {
+        top: -6px;
+    }
+}
+
+@media (min-width: 64rem) {
+    .header {
+        padding: 0 35px;
+    }
+    .header li {
+        float: left;
+    }
+    .header li a {
+        padding: 20px 30px;
+    }
+    .header .menu {
+        clear: none;
+        float: right;
+        max-height: none;
+    }
+    .header .menuIcon {
+        display: none;
+    }
+}
+
+@media (min-width: 80rem) {
+    .header {
+        padding: 0 100px;
+    }
+}
+
+@media (min-width: 90rem) {
+    .header {
+        padding: 0 150px;
+    }
+}
+
+@media (min-width: 105rem) {
+    .header {
+        padding: 0 225px;
+    }
+}
+
+@media (min-width: 120rem) {
+    .header {
+        padding: 0 350px;
+    }
+}
+
+.searchContainer {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#InputSearch {
+    width: 50%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}

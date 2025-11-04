@@ -10,9 +10,21 @@ async function viewAllProduct(){
     }
 }
 
-function viewProduct(req){
 
+async function viewProduct(req){
+    const sql = 'SELECT p.idPro, p.nomePro, p.valuePro, p.quantityPro, p.tagPro, p.atributesPro, p.metaPro FROM product AS p WHERE p.idPro = ?'
+    try{
+        const [rows] = await db.execute(sql, req);
+        return {rows};
+    }catch(err){
+        console.log(`Falha ao consultar produto ${err}`);
+    }
 }
+async function print(){
+    const result = await viewProduct([3]);
+    console.log(JSON.stringify(result, null, 2));
+}
+print();
 
 async function newProduct(req){
     const sql = 'INSERT INTO product(nomePro, valuePro, quantityPro, tagPro, atributesPro, metaPro) VALUES (?, ?, ?, ?, ?, ?)';

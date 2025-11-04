@@ -1,6 +1,7 @@
 {
   "name": "teste_t1",
   "version": "0.1.0",
+  "type": "commonjs",
   "description": "Inventory API - initial skeleton",
   "main": "src/server.js",
   "scripts": {

@@ -1,7 +1,13 @@
 const {db} = require('../middleware/dbConnect.js');
 
-function viewAllProduct(req){""
-
+async function viewAllProduct(){
+    const sql = 'SELECT p.idPro, p.nomePro, p.valuePro, p.quantityPro, p.tagPro, p.atributesPro, p.metaPro FROM product AS p';
+    try{
+        const [rows] = await db.execute(sql);
+        return {rows};
+    }catch(err){
+        console.log(`Falha ao consultar todo o stock ${err}`);
+    }
 }
 
 function viewProduct(req){
@@ -23,9 +29,6 @@ async function newProduct(req){
         console.log(`Error ao criar produto: ${err}`);
     }
 }
-
-let item = {nome:'lego', value: 23.12, quantity: 3, tag:'brinquedo', atributes:'', meta:[]}
-newProduct(item);
 
 function updateProduct(req){
 

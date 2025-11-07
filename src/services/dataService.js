@@ -1,7 +1,7 @@
 const {db} = require('../middleware/dbConnect.js');
 
 async function viewAllProduct(){
-    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.tag, p.atributes, p.meta FROM product AS p';
+    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.image_path, p.tag, p.atributes, p.meta FROM product AS p';
     try{
         const [rows] = await db.execute(sql);
         return rows;
@@ -11,7 +11,7 @@ async function viewAllProduct(){
 }
 
 async function viewProduct(req){
-    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.tag, p.atributes, p.meta FROM product AS p WHERE p.id = ?'
+    const sql = 'SELECT p.id, p.nome, p.value, p.quantity, p.image_path, ,p.tag, p.atributes, p.meta FROM product AS p WHERE p.id = ?'
     try{
         const [rows] = await db.execute(sql, [req.id]);
         return rows;
@@ -21,12 +21,13 @@ async function viewProduct(req){
 }
 
 async function newProduct(req){
-    const sql = 'INSERT INTO product(nome, value, quantity, tag, atributes, meta) VALUES (?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO product(nome, value, quantity, image_path, tag, atributes, meta) VALUES (?, ?, ?, ?, ?, ?)';
     try{
         const [result] = await db.execute(sql, [
             req.nome,
             req.value,
             req.quantity,
+            req.image_path,
             req.tag,
             req.atributes,
             JSON.stringify(req.meta)

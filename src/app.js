@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 app.use('/stock', stockRoutes);
 app.use('/products', productsRoutes);
 
+
 app.use(errorHandler);
 
 module.exports = app;

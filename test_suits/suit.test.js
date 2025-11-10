@@ -1,5 +1,6 @@
-const request = require('supertest')(process.env.BASE_URL || 'http://localhost:3000');
-
+require ('dotenv').config
+const BASE_URL = `http://localhost:${process.env.PORT ?? 3030}`
+const request = require('supertest')(BASE_URL);
 async function clearStock() {
   const res = await request.get('/stock');
   if (res.status === 200 && Array.isArray(res.body)) {
@@ -8,7 +9,9 @@ async function clearStock() {
       if (id !== undefined && id !== null) {
         try {
           await request.delete(`/stock/${id}`);
-        } catch (e) {}
+        } catch (e) {
+          throw e; 
+        }
       }
     }
   }

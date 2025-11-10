@@ -1,5 +1,6 @@
 const app = require('./app');
 const {connectionTest, closeConnection} = require('./middleware/dbConnect.js');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 

@@ -2,7 +2,6 @@ const express = require('express');
 const stockRoutes = require('./routes/stockRoutes');
 const productsRoutes = require('./routes/productsRoutes');
 const errorHandler = require('./middleware/errorHandler');
-
 const app = express();
 
 app.use(express.json());

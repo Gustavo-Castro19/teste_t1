@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const stockService = require('../services/stockService');
 
-router.post('/electronics', (req, res, next) => {
+router.post('/electronics', async (req, res, next) => {
   try {
     const payload = {
       ...req.body,
@@ -14,14 +14,14 @@ router.post('/electronics', (req, res, next) => {
         releaseDate: req.body.releaseDate
       }
     };
-    const item = stockService.create(payload);
+    const item = await stockService.create(payload);
     res.status(201).json(item);
   } catch (err) {
     next(err);
   }
 });
 
-router.post('/furniture', (req, res, next) => {
+router.post('/furniture', async (req, res, next) => {
   try {
     const payload = {
       ...req.body,
@@ -31,14 +31,14 @@ router.post('/furniture', (req, res, next) => {
         material: req.body.material
       }
     };
-    const item = stockService.create(payload);
+    const item = await stockService.create(payload);
     res.status(201).json(item);
   } catch (err) {
     next(err);
   }
 });
 
-router.post('/hortifruti', (req, res, next) => {
+router.post('/hortifruti', async (req, res, next) => {
   try {
     const payload = {
       ...req.body,
@@ -47,25 +47,25 @@ router.post('/hortifruti', (req, res, next) => {
         weight: req.body.weight
       }
     };
-    const item = stockService.create(payload);
+    const item = await stockService.create(payload);
     res.status(201).json(item);
   } catch (err) {
     next(err);
   }
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
-    const updated = stockService.update(req.params.id, req.body);
+    const updated = await stockService.update(req.params.id, req.body);
     res.json(updated);
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
-    stockService.remove(req.params.id);
+    await stockService.remove(req.params.id);
     res.status(204).send();
   } catch (err) {
     next(err);

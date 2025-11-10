@@ -1,5 +1,6 @@
-module.exports = function errorHandler(err, req, res, next) {
+module.exports = function errorHandler(err, req, res, next){
   const status = err && err.status ? err.status : 500;
+
   const payload = {
     error: {
       message: err.message || 'Internal Server Error',

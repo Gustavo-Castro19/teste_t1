@@ -1,7 +1,7 @@
 const http = require('http');
 
 const API_URL = 'localhost';
-const API_PORT = 3000;
+const API_PORT = 3030;
 
 const colors = {
   green: '\x1b[32m',

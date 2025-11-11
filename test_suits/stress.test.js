@@ -4,7 +4,7 @@ let stressTestConfig = {
   requestQuantity: 100, // Quantidade de requests a serem feitas
   concurrentRequests: 10, // Requests simultâneas
   timeout: 60000, // 60 segundos
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3030",
 };
 
 async function makeRequest(method, path, data = null) {

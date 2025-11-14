@@ -1,9 +1,9 @@
 const { generateProducts } = require("../src/scripts/stress-test-scripts");
 
 let stressTestConfig = {
-  requestQuantity: 100, // Quantidade de requests a serem feitas
-  concurrentRequests: 10, // Requests simultâneas
-  timeout: 60000, // 60 segundos
+  requestQuantity: 100, 
+  concurrentRequests: 10,
+  timeout: 60000,
   baseURL: "http://localhost:3030",
 };
 
@@ -24,7 +24,6 @@ async function makeRequest(method, path, data = null) {
   };
 }
 
-// Função para executar requisições em lotes
 async function executeBatchRequests(requests, batchSize = 10) {
   const results = [];
   const times = [];
@@ -174,7 +173,6 @@ describe(`Teste de Stress - ${stressTestConfig.requestQuantity} requests com ${s
         requests.push(makeRequest("GET", "/stock"));
       }
 
-      // Embaralhar requests para simular carga real
       const shuffledRequests = requests.sort(() => Math.random() - 0.5);
 
       const testStartTime = Date.now();

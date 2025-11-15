@@ -1,4 +1,4 @@
-# Plano de Testes – Sistema de Estoque e Produtos
+# Plano de Testes – Sistema de Estoque e Produtos v1.1 
 
 ## 1 Introdução e Objetivos
 
@@ -30,7 +30,7 @@ Nossos objetivos:
 * Cadastro de produtos genéricos e específicos (eletrônicos, móveis, hortifruti).
 * Atualização de dados de produto.
 * Remoção de produto.
-* Integração com o front-end (UI).
+* Integração com o front-end (UI). OBS: POSTERGARDO INDEFINIDAMENTE
 * Validações de entrada (campos obrigatórios, valores negativos, IDs inválidos).
 * Teste básico de performance (listagem com >100 produtos).
 
@@ -49,7 +49,7 @@ Nossos objetivos:
 
 * **Unitário** – validações de dados, regras de negócio (opcional).
 * **Integração de API** – Postman, Jest ou equivalente para exercitar endpoints.
-* **Sistema/E2E** – verificar a integração com a UI.
+* **Sistema/E2E** – verificar a integração com a UI. OBS: POSTERGARDO INDEFINIDAMENTE
 
 **Tipos aplicáveis**:
 
@@ -85,9 +85,14 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Existir ao menos um item no estoque.  
 **Passos:**  
-1. GET `/stock`.  
-**Esperado:** HTTP 200; JSON array com `idPro`, `name`, `value`, `quantity`.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. Criar produto com POST `/stock`
+2. GET `/stock`
+
+**Esperado:** 
+- HTTP 200
+- JSON array com campos: `id`, `name`, `value`, `quantity`, `tag`, `special`, `meta`, `created_at`, `updated_at`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -95,9 +100,13 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum item cadastrado.  
 **Passos:**  
-1. GET `/stock`.  
-**Esperado:** HTTP 200; JSON `[]`.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. GET `/stock`
+
+**Esperado:** 
+- HTTP 200
+- JSON `[]` (array vazio)
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -105,9 +114,20 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Acesso ao endpoint.  
 **Passos:**  
-1. POST `/stock` com JSON `name`, `value`, `quantity`.  
-**Esperado:** HTTP 201; JSON com `idPro`, `name`, `value`, `quantity`.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. POST `/stock` com JSON:
+```json
+{
+  "name": "Product B",
+  "value": 50,
+  "quantity": 5
+}
+```
+
+**Esperado:** 
+- HTTP 201
+- JSON com `id`, `name`, `value`, `quantity` e campos adicionais
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -115,9 +135,19 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Acesso ao endpoint.  
 **Passos:**  
-1. POST `/stock` sem campo `name`.  
-**Esperado:** HTTP 400; mensagem de erro.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. POST `/stock` sem campo `name`:
+```json
+{
+  "value": 100,
+  "quantity": 10
+}
+```
+
+**Esperado:** 
+- HTTP 400
+- Mensagem de erro: `Field "name" is required`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -125,19 +155,33 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Produto existente no estoque.  
 **Passos:**  
-1. PUT `/stock/{idPro}` com novos valores.  
-**Esperado:** HTTP 200; JSON atualizado.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. Criar produto
+2. PUT `/stock/{id}` com novos valores:
+```json
+{
+  "value": 80
+}
+```
+
+**Esperado:** 
+- HTTP 200
+- JSON com valores atualizados, mantendo campos não modificados
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
-### CT-006 – Atualizar produto inexistente ou inválido (negativo)
+### CT-006 – Atualizar produto inexistente (negativo)
 
-**Pré-condições:** Nenhum produto correspondente ou dados inválidos.  
+**Pré-condições:** Nenhum produto com o ID especificado.  
 **Passos:**  
-1. PUT `/stock/{idPro}` com ID inexistente/dados inválidos.  
-**Esperado:** HTTP 400 ou 404; mensagem de erro.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. PUT `/stock/99999` com dados válidos
+
+**Esperado:** 
+- HTTP 404
+- Mensagem: `Product not found`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -145,9 +189,16 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Produto existente.  
 **Passos:**  
-1. DELETE `/stock/{idPro}`.  
-**Esperado:** HTTP 200; confirmação de remoção.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. Criar produto
+2. DELETE `/stock/{id}`
+3. Verificar com GET `/stock/{id}`
+
+**Esperado:** 
+- HTTP 200 na deleção
+- HTTP 404 na verificação posterior
+- Mensagem de confirmação: `Product removed successfully`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -155,9 +206,14 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Produto existente.  
 **Passos:**  
-1. GET `/stock/{id}`.  
-**Esperado:** HTTP 200; objeto JSON com `idPro`, `name`, `value`, `quantity`.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. Criar produto
+2. GET `/stock/{id}`
+
+**Esperado:** 
+- HTTP 200
+- Objeto JSON completo do produto
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -165,9 +221,13 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. GET `/stock/999999`.  
-**Esperado:** HTTP 404; `"Produto não encontrado"`.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. GET `/stock/99999`
+
+**Esperado:** 
+- HTTP 404
+- Mensagem: `Product not found`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -175,9 +235,25 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. POST `/products/electronics` com JSON `name`, `value`, `quantity`, `brand`, `manufacturer`, `model`, `releaseDate`.  
-**Esperado:** HTTP 201; produto criado com ID.  
-**Requisitos:** RF-PROD.  
+1. POST `/products/electronics` com JSON:
+```json
+{
+  "name": "iPhone 15",
+  "value": 5000,
+  "quantity": 10,
+  "brand": "Apple",
+  "manufacturer": "Foxconn",
+  "model": "A2849",
+  "releaseDate": "2023-09-22"
+}
+```
+
+**Esperado:** 
+- HTTP 201
+- Produto com `tag: "electronics"`
+- Campo `special` contendo: `brand`, `manufacturer`, `model`, `releaseDate`
+
+**Requisitos:** RF-PROD
 
 ---
 
@@ -185,9 +261,23 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. POST `/products/furniture` com JSON `name`, `value`, `quantity`, `dimensions`, `material`.  
-**Esperado:** HTTP 201; produto criado com ID.  
-**Requisitos:** RF-PROD.  
+1. POST `/products/furniture` com JSON:
+```json
+{
+  "name": "Mesa de Escritório",
+  "value": 800,
+  "quantity": 5,
+  "dimensions": "120x60x75cm",
+  "material": "MDP"
+}
+```
+
+**Esperado:** 
+- HTTP 201
+- Produto com `tag: "furniture"`
+- Campo `special` contendo: `dimensions`, `material`
+
+**Requisitos:** RF-PROD
 
 ---
 
@@ -195,29 +285,62 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. POST `/products/hortifruti` com JSON `name`, `value`, `quantity`, `weight`.  
-**Esperado:** HTTP 201; produto criado considerando peso.  
-**Requisitos:** RF-PROD.  
+1. POST `/products/hortifruti` com JSON:
+```json
+{
+  "name": "Maçã Gala",
+  "value": 8.99,
+  "quantity": 100,
+  "weight": 0.15
+}
+```
+
+**Esperado:** 
+- HTTP 201
+- Produto com `tag: "fruits"`
+- Campo `special` contendo: `weight`
+
+**Requisitos:** RF-PROD
 
 ---
 
-### CT-013 – Atualizar produto (RF-PROD) (positivo)
+### CT-013 – Adicionar produto sem valor (negativo)
 
-**Pré-condições:** Produto cadastrado.  
+**Pré-condições:** Acesso ao endpoint.  
 **Passos:**  
-1. PUT `/products/{id}` com novos dados.  
-**Esperado:** HTTP 200; produto atualizado.  
-**Requisitos:** RF-PROD.  
+1. POST `/stock` sem campo `value`:
+```json
+{
+  "name": "Product F",
+  "quantity": 10
+}
+```
+
+**Esperado:** 
+- HTTP 400
+- Mensagem: `Field "value" is required`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
-### CT-014 – Deletar produto do estoque (RF-PROD) (positivo)
+### CT-014 – Adicionar produto sem quantidade (negativo)
 
-**Pré-condições:** Produto cadastrado.  
+**Pré-condições:** Acesso ao endpoint.  
 **Passos:**  
-1. DELETE `/products/{id}`.  
-**Esperado:** HTTP 204; posterior GET retorna 404.  
-**Requisitos:** RF-PROD.  
+1. POST `/stock` sem campo `quantity`:
+```json
+{
+  "name": "Product G",
+  "value": 100
+}
+```
+
+**Esperado:** 
+- HTTP 400
+- Mensagem: `Field "quantity" is required`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
@@ -225,9 +348,20 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Acesso ao endpoint.  
 **Passos:**  
-1. POST `/stock` com `value` < 0.  
-**Esperado:** HTTP 400; mensagem de erro.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS.  
+1. POST `/stock` com `value` < 0:
+```json
+{
+  "name": "Product H",
+  "value": -10,
+  "quantity": 1
+}
+```
+
+**Esperado:** 
+- HTTP 400
+- Mensagem de erro sobre valor inválido
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS
 
 ---
 
@@ -235,9 +369,20 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. POST `/stock` com `quantity: 0`.  
-**Esperado:** HTTP 201; produto criado com quantidade 0.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS.  
+1. POST `/stock` com `quantity: 0`:
+```json
+{
+  "name": "Product I",
+  "value": 50,
+  "quantity": 0
+}
+```
+
+**Esperado:** 
+- HTTP 201
+- Produto criado com `quantity: 0`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
@@ -245,29 +390,62 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Produto existente.  
 **Passos:**  
-1. PUT `/stock/{idPro}` alterando somente `quantity`.  
-**Esperado:** HTTP 200; apenas quantidade alterada.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS.  
+1. Criar produto
+2. PUT `/stock/{id}` alterando somente `quantity`:
+```json
+{
+  "quantity": 15
+}
+```
+
+**Esperado:** 
+- HTTP 200
+- Apenas `quantity` alterada
+- Outros campos mantidos
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
-### CT-018 – Atualizar produto com nome duplicado (negativo)
+### CT-018 – Atualizar apenas valor (positivo)
 
-**Pré-condições:** Dois produtos cadastrados.  
+**Pré-condições:** Produto existente.  
 **Passos:**  
-1. Atualizar nome de um para o nome do outro.  
-**Esperado:** HTTP 409; erro de nome duplicado.  
-**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS.  
+1. Criar produto
+2. PUT `/stock/{id}` alterando somente `value`:
+```json
+{
+  "value": 150
+}
+```
+
+**Esperado:** 
+- HTTP 200
+- Apenas `value` alterado
+- Outros campos mantidos
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
-### CT-019 – Listar estoque com múltiplos produtos (positivo)
+### CT-019 – Atualizar apenas nome (positivo)
 
-**Pré-condições:** Múltiplos produtos cadastrados.  
+**Pré-condições:** Produto existente.  
 **Passos:**  
-1. GET `/stock`.  
-**Esperado:** HTTP 200; array com todos os produtos.  
-**Requisitos:** RF-STOCK, RF-FRONT.  
+1. Criar produto
+2. PUT `/stock/{id}` alterando somente `name`:
+```json
+{
+  "name": "Product L Updated"
+}
+```
+
+**Esperado:** 
+- HTTP 200
+- Apenas `name` alterado
+- Outros campos mantidos
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
@@ -275,9 +453,13 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Nenhum.  
 **Passos:**  
-1. GET `/stock/abc`.  
-**Esperado:** HTTP 400; erro de ID inválido.  
-**Requisitos:** RF-STOCK, RF-FRONT.  
+1. GET `/stock/abc`
+
+**Esperado:** 
+- HTTP 404
+- Mensagem de erro
+
+**Requisitos:** RF-STOCK, RF-FRONT
 
 ---
 
@@ -285,53 +467,75 @@ Execução local ou em ambiente de testes. A API deve estar rodando antes dos te
 
 **Pré-condições:** Produto removido.  
 **Passos:**  
-1. DELETE `/stock/{idPro}` novamente.  
-**Esperado:** HTTP 404; "Produto não encontrado".  
-**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS.  
+1. Criar e deletar produto
+2. DELETE `/stock/{id}` novamente
+
+**Esperado:** 
+- HTTP 404
+- Mensagem: `Product not found`
+
+**Requisitos:** RF-STOCK, RF-PROD, RF-TRANS
 
 ---
 
-### CT-022 – Performance na listagem (positivo)
+### CT-022 – Listar produtos com múltiplos itens (positivo)
+
+**Pré-condições:** Múltiplos produtos cadastrados.  
+**Passos:**  
+1. Criar 3 produtos
+2. GET `/stock`
+
+**Esperado:** 
+- HTTP 200
+- Array com 3 elementos
+- Cada elemento com estrutura completa
+
+**Requisitos:** RF-STOCK, RF-FRONT
+
+---
+
+### CT-023 – Performance na listagem (positivo)
 
 **Pré-condições:** >100 produtos cadastrados.  
 **Passos:**  
 1. GET `/stock`.  
 **Esperado:** HTTP 200; resposta em < 2s com array completo.  
+
 **Requisitos:** RF-STOCK, RF-FRONT, RF-TRANS.  
 
 ---
 
-
-
 ## 6 Matriz de Rastreabilidade
 
-| Caso | Descrição | RF-STOCK | RF-PROD | RF-FRONT | RF-TRANS |
+
+Matriz de Rastreabilidade — Estoque & Produtos
+| Caso | descrição | RF-STOCK | RF-PROD | RF-FRONT | RF-TRANS |
 |------|-----------|----------|---------|----------|----------|
-| CT-001 | Listar estoque (positivo) | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-002 | Listar estoque vazio | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-003 | Adicionar produto (positivo) | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-004 | Adicionar produto sem nome | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-005 | Atualizar produto existente | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-006 | Atualizar produto inexistente/inválido | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-007 | Remover produto existente | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-008 | Consultar produto por ID | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-009 | Consultar produto inexistente | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-010 | Cadastrar eletrônico | – | ✔️ | ✔️ | ✔️ |
-| CT-011 | Cadastrar móvel | – | ✔️ | ✔️ | ✔️ |
-| CT-012 | Cadastrar hortifruti | – | ✔️ | ✔️ | ✔️ |
-| CT-013 | Atualizar produto (RF-PROD) | – | ✔️ | ✔️ | ✔️ |
-| CT-014 | Deletar produto (RF-PROD) | – | ✔️ | ✔️ | ✔️ |
-| CT-015 | Adicionar valor negativo | ✔️ | ✔️ | ✔️ | ✔️ |
-| CT-016 | Adicionar quantidade zero | ✔️ | ✔️ | – | ✔️ |
-| CT-017 | Atualizar apenas quantidade | ✔️ | ✔️ | – | ✔️ |
-| CT-018 | Atualizar nome duplicado | ✔️ | ✔️ | – | ✔️ |
-| CT-019 | Listar múltiplos produtos | ✔️ | ✔️ | ✔️ | – |
-| CT-020 | Consultar ID inválido | ✔️ | – | ✔️ | – |
-| CT-021 | Remover já deletado | ✔️ | ✔️ | – | ✔️ |
-| CT-022 | Performance listagem | ✔️ | – | ✔️ | ✔️ |
+|CT-001| Listar estoque (positivo)|	✔ | ✔	| ✔  | ✔  |
+|CT-002| Listar estoque (vazio)|	✔ |	✔	|✔	| ✔  |
+|CT-003| Adicionar produto (positivo)|	✔	|✔	|✔	|✔ |
+|CT-004| Adicionar produto sem nome (negativo)|	✔ |	✔ |	✔ |	✔ |
+|CT-005| Atualizar produto existente (positivo)|	✔ |	✔	|✔	|✔ |
+|CT-006| Atualizar produto inexistente (negativo)|	✔ |	✔ |	✔ |	✔ |
+|CT-007| Remover produto existente (positivo)|	✔ |	✔ |	✔ |	✔ |
+|CT-008| Consultar produto por ID (positivo)|	✔ |	✔ |	✔ |	✔ |
+|CT-009| Consultar produto inexistente (negativo)|	✔ |	✔ |	✔ |	✔ |
+|CT-010| Cadastrar produto eletrônico	|–|	✔ |	–|	–|
+|CT-011| Cadastrar produto móvel	|–|	✔	|–	|–|
+|CT-012| Cadastrar produto hortifruti|	–|	✔	|–|	–|
+|CT-013| Adicionar produto sem valor (negativo)|	✔ |	✔ |	✔ |	✔ |
+|CT-014| Adicionar produto sem quantidade (negativo)|	✔ |	✔ |	–|	✔ |
+|CT-015| Adicionar produto com valor negativo (negativo)|	✔ |	✔ |	✔ |	✔ |
+|CT-016| Adicionar produto com quantidade zero (positivo)|	✔ |	✔ |	–|	✔ |
+|CT-017| Atualizar apenas quantidade (positivo)|	✔ |	✔ |	–|	✔ |
+|CT-018| Atualizar apenas valor (positivo)|	✔ |	✔ |	–|	✔ |
+|CT-019| Atualizar apenas nome (positivo)|	✔ |	✔ |	–|	✔ |
+|CT-020| Consultar por ID inválido (negativo)|	✔ |	–|	|✔	|–|
+|CT-021| Remover produto já deletado (negativo) |✔ |✔|–|✔ |
+|CT-022| Listar produtos com múltiplos itens (positivo)|	✔	|–|	✔	|–|
+|CT-023| Performance na listagem (positivo)|✔ |–|✔ |✔ |
 
 ---
-
 
 ## 7 Entregáveis
 

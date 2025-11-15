@@ -1,11 +1,24 @@
-const { generateProducts } = require("../src/scripts/stress-test-scripts");
-
 let stressTestConfig = {
   requestQuantity: 100, 
   concurrentRequests: 10,
   timeout: 60000,
   baseURL: "http://localhost:3030",
 };
+
+function generateProducts(quantity) {
+  let productArray = [];
+
+  for (let i = 0; i < quantity; i++) {
+    const id = i;
+    const quantity = Math.floor(Math.random() * 100);
+    const name = "Product " + i;
+    const value = parseFloat((Math.random() * 1000 + 1).toFixed(2));
+    const newProduct = {id, name, value, quantity};
+
+    productArray.push(newProduct);
+  }
+  return productArray;
+}
 
 async function makeRequest(method, path, data = null) {
   const response = await fetch(`${stressTestConfig.baseURL}${path}`, {
@@ -42,7 +55,7 @@ async function executeBatchRequests(requests, batchSize = 10) {
   return { results, times };
 }
 
-describe(`Teste de Stress - ${stressTestConfig.requestQuantity} requests com ${stressTestConfig.concurrentRequests} simultaneas`, () => {
+describe(`CT 023- Performance listagem - ${stressTestConfig.requestQuantity} requests com ${stressTestConfig.concurrentRequests} simultaneas`, () => {
   beforeAll(() => {
     console.log("\nIniciando Testes de Stress da API");
     console.log(

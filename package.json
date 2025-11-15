@@ -2,12 +2,12 @@
   "name": "teste_t1",
   "version": "0.1.0",
   "type": "commonjs",
-  "description": "Inventory API - initial skeleton",
+  "description": "Inventory API - v1.5",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --detectOpenHandles",
     "populate": "node samples/sampleDat.js"
   },
   "keywords": [],

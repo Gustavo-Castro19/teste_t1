@@ -129,7 +129,7 @@ describe('Casos CT-001 a CT-022 - API /stock ', () => {
     });
   });
 
-  describe('CT-010: Adicionar Produto Eletrônico (Adaptado para /stock se possível)', () => {
+  describe('CT-010: Adicionar Produto Eletrônico ', () => {
     test('POST /products/electronics deve criar produto eletrônico com atributos especiais', async () => {
       const payload = {
         name: 'iPhone 15',
@@ -167,7 +167,7 @@ describe('Casos CT-001 a CT-022 - API /stock ', () => {
     });
   });
 
-  describe('CT-012: Adicionar Produto Hortifruti (Adaptado)', () => {
+  describe('CT-012: Adicionar Produto Hortifruti ', () => {
     test('POST /products/hortifruti deve criar produto hortifruti com atributos especiais', async () => {
       const payload = {
         name: 'Maçã Gala',

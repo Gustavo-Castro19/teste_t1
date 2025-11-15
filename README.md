@@ -6,11 +6,11 @@
 [![Node.js](https://img.shields.io/badge/Node.js-v16+-green.svg)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-v5.1.0-blue.svg)](https://expressjs.com/)
 
-## 📋 Sobre o Projeto
+##  Sobre o Projeto
 
 API de gerenciamento de inventário desenvolvida em Node.js com Express, permitindo o controle de estoque de diferentes categorias de produtos (eletrônicos, móveis, hortifruti) com atributos especializados para cada tipo.
 
-## ✨ Funcionalidades
+##  Funcionalidades
 
 - ✅ CRUD completo de produtos
 - ✅ Suporte a múltiplas categorias (Eletrônicos, Móveis, Hortifruti)

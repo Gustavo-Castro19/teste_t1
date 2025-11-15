@@ -2,7 +2,7 @@
 
 ## 1) Metadados do Ciclo
 - **Projeto/Sistema:** Inventory API — Sistema de Estoque e Produtos  
-- **Versão testada (build):** v1.0.0  
+- **Versão testada (build):** v1.5.0  
 - **Período de execução:** 14/11/2025  
 - **Responsável pelo relatório:** equipe: Gustavo, Ricardo, Daniel, Matheus Gabriel, Victor Hugo.   
 - **Plano de teste de referência:** *plan_test.md (rev. 1.1)*  

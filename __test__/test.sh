@@ -7,7 +7,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-API_URL="http://localhost:3000"
+API_URL="http://localhost:3030"
 
 echo -e "${BLUE}================================================${NC}"
 echo -e "${BLUE}  Stock API Manual Test Script${NC}"

@@ -4,7 +4,7 @@
 - **Projeto/Sistema:** Inventory API — Sistema de Estoque e Produtos  
 - **Versão testada (build):** v1.5.0  
 - **Período de execução:** 14/11/2025  
-- **Responsável pelo relatório:** equipe: Gustavo, Ricardo, Daniel, Matheus Gabriel, Victor Hugo.   
+- **Responsável pelo relatório:** equipe: Gustavo, Ricardo, Daniel, Matheus Gabriel,Kauã Kairon, Victor Hugo.   
 - **Plano de teste de referência:** *plan_test.md (rev. 1.1)*  
 - **Requisitos-base:** _RF-STOCK, RF-PROD, RF-FRONT, RF-TRANS (ver doc_requisitos) para detalhes_ 
 
@@ -189,10 +189,10 @@ Ran all test suites.
 | Papel | Nome | Decisão | Data |
 |-------|--------|----------|--------|
 | QA/DEV | Gustavo Castro | ✔ Aprovado | 14/11/2025 |
-| QA/DEV | Matheus Gabriel | ✔ | 14/11/2025 |
-| QA/DEV | Ricardo | ✔  | 14/11/2025 |
-| QA/DEV | Daniel | ✔  | 14/11/2025 |
-| QA/DEV | Kaua | ✔  | 14/11/2025 |
-| QA/DEV | Victor Hugo | ✔  | 14/11/2025 |
+| QA/DEV | Matheus Gabriel | ✔ Aprovado| 14/11/2025 |
+| QA/DEV | Ricardo | ✔ Aprovado | 14/11/2025 |
+| QA/DEV | Daniel | ✔ Aprovado | 14/11/2025 |
+| QA/DEV | Kaua | ✔ Aprovado | 14/11/2025 |
+| QA/DEV | Victor Hugo | ✔ Aprovado | 14/11/2025 |
 
 ---

@@ -11,8 +11,8 @@
 ---
 
 ## 2) Resumo Executivo
-**Status geral:** ✔ **Aprovado**  
-**Confiabilidade para Release:** **Alta**
+**Status geral:** ✔ ** Não aprovado**  
+**Confiabilidade para Release:** **Alta(API/BACK-END)**/**não se aplica(UI/FRONT-END)**
 
 **Destaques:**
 - Todas as suites de teste **passaram (100%)**  
@@ -24,7 +24,11 @@
   - Média de **152 req/s** nos cenários mais pesados  
 - API estável em volume e concorrência moderada  
 
-**Go/No-Go recomendado:** ✔ **GO**
+**Defeitos:**
+- _A UI não consegue puxar a API_ : não foi implementado devido a defecção de cronograma  
+    - **severidade gravissimo**: Não permite o lançamento do software  
+
+**Go/No-Go recomendado:** ✔ **NO-GO**
 
 ---
 
@@ -70,7 +74,8 @@
 | Massa inicial de dados pronta | ✔ Atendido |
 | 100% dos testes executados | ✔ Atendido |
 | Sem defeitos críticos | ✔ Atendido |
-| Todos os requisitos coberto
+| Todos os requisitos coberto | Não atendido  |
+| UI integrada | não atendido
 ___
 ## 7) Cronograma (Planejado x Realizado)
 
@@ -134,11 +139,13 @@ A API suporta múltiplas requisições simultâneas com performance excelente.
 ---
 
 ## 11) Defeitos
-### 📌 Nenhum defeito encontrado
+### 📌 Nenhum defeito encontrado na API 
 - Nenhum comportamento inesperado  
 - Nenhum retorno incorreto  
 - Nenhum erro de validação fora da especificação  
-
+### UI não implementada 
+- Não foi possivel testar a UI, fazer testes de integração e sistema, ou dar o software como integre devido a indisponibilidade do front-end. 
+- Impossivel reportar sucesso ou insucessos, portanto. 
 ---
 
 ## 12) Rastreabilidade (Requisito → Casos → Resultado)
@@ -147,7 +154,7 @@ A API suporta múltiplas requisições simultâneas com performance excelente.
 |-----------|--------------------|-----------|
 | RF-STOCK | CT-001..CT-023 | ✔ Aprovado |
 | RF-PROD | CT-003..CT-023 | ✔ Aprovado |
-| RF-FRONT | CT-001, CT-002, CT-022 | ✔ Aprovado |
+| RF-FRONT | CT-001, CT-002, CT-022 | Não aprovado |
 | RF-TRANS | CT-001..CT-007, CT-013..018, CT-021, CT-023 | ✔ Aprovado |
 
 ---
@@ -167,6 +174,10 @@ Ran all test suites.
 - ❗ Jest exibiu aviso sobre handles abertos  
   **Impacto:** Nenhum — testes não foram afetados  
   **Recomendação:** usar `--detectOpenHandles` em execuções futuras  
+- ❗ Impossivel dizer se a integração com o front sera adequada
+ **Impacto:** Alto - teste não escritos e 0 ferramentas para testar UI aplicadas
+ **Recomendação:** testes constantes enquanto se constroi interface, seguir bons padrões, testes de regressão e automação para garantir integridade
+
 ---
 
 ## 15) 
@@ -176,6 +187,7 @@ Ran all test suites.
 - Executar testes de stress em cargas maiores (500–1000 req)  
 - Incluir testes de endurance (long duration)  
 - Incluir testes mais robustos de validação de dados 
+- Esperar construção do front-end para mais detalhamento de testes e conferir integração
 
 ### 2-Lições aprendidas
 - Prazos mal definidos levam a não construção ou falta de testagem, o front-end não pode ser integrado devido a confusões de Cronograma
@@ -188,11 +200,11 @@ Ran all test suites.
 
 | Papel | Nome | Decisão | Data |
 |-------|--------|----------|--------|
-| QA/DEV | Gustavo Castro | ✔ Aprovado | 14/11/2025 |
-| QA/DEV | Matheus Gabriel | ✔ Aprovado| 14/11/2025 |
-| QA/DEV | Ricardo | ✔ Aprovado | 14/11/2025 |
-| QA/DEV | Daniel | ✔ Aprovado | 14/11/2025 |
-| QA/DEV | Kaua | ✔ Aprovado | 14/11/2025 |
-| QA/DEV | Victor Hugo | ✔ Aprovado | 14/11/2025 |
+| QA/DEV | Gustavo Castro | Não Aprovado | 14/11/2025 |
+| QA/DEV | Matheus Gabriel | Não Aprovado| 14/11/2025 |
+| QA/DEV | Ricardo | Não Aprovado | 14/11/2025 |
+| QA/DEV | Daniel | Não Aprovado | 14/11/2025 |
+| QA/DEV | Kaua | Não Aprovado | 14/11/2025 |
+| QA/DEV | Victor Hugo | Não Aprovado | 14/11/2025 |
 
 ---

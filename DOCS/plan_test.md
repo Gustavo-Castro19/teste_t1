@@ -30,7 +30,7 @@ Nossos objetivos:
 * Cadastro de produtos genéricos e específicos (eletrônicos, móveis, hortifruti).
 * Atualização de dados de produto.
 * Remoção de produto.
-* Integração com o front-end (UI). OBS: POSTERGARDO INDEFINIDAMENTE
+* Integração com o front-end (UI). 
 * Validações de entrada (campos obrigatórios, valores negativos, IDs inválidos).
 * Teste básico de performance (listagem com >100 produtos).
 
@@ -49,7 +49,7 @@ Nossos objetivos:
 
 * **Unitário** – validações de dados, regras de negócio (opcional).
 * **Integração de API** – Postman, Jest ou equivalente para exercitar endpoints.
-* **Sistema/E2E** – verificar a integração com a UI. OBS: POSTERGARDO INDEFINIDAMENTE
+* **Sistema/E2E** – verificar a integração com a UI. 
 
 **Tipos aplicáveis**:
 
